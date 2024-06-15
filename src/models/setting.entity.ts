@@ -36,7 +36,7 @@ export class SettingEntity {
   @BeforeInsert()
   updateDates() {
     const currentDate = new Date();
-    currentDate.setMinutes(currentDate.getMinutes() + 5);
+    currentDate.setSeconds(currentDate.getSeconds() + 2);
     this.deleteLink = currentDate;
     this.deletePost = currentDate;
   }

@@ -1,6 +1,6 @@
 import { ConfigModule } from '@nestjs/config';
 import { LinkController } from './link.controller';
-import { LinkRepository } from './link.repository';
+import { LinkRepository } from '../../shared/repositories/link.repository';
 import { LinkService } from './link.service';
 import { Module } from '@nestjs/common';
 

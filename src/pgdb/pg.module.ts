@@ -18,7 +18,6 @@ import { ConfigService } from '@nestjs/config';
             password: configService.get<string>('database.password'),
             database: configService.get<string>('database.database'),
             synchronize: true,
-            logging: true,
             entities: [__dirname + '/../**/*.entity.js'],
           });
           await dataSource.initialize();

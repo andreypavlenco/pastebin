@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { SettingRepository } from './setting.repository';
+import { SettingRepository } from '../../shared/repositories/setting.repository';
 import { PostEntity } from 'src/models/post.entity';
 import { LinkEntity } from 'src/models/link.entity';
 
@@ -12,4 +12,8 @@ export class SettingService {
   saveSetting(post: PostEntity, link: LinkEntity) {
     return this.settingRepository.createSetting(post, link);
   }
+
+  // updateTimeLinkSetting() {
+  //   return this.settingRepository.createSetting(post, link);
+  // }
 }

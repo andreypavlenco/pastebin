@@ -1,11 +1,10 @@
 import { Inject, Injectable } from '@nestjs/common';
-
 import { savePostDto } from './dto';
 import * as fs from 'fs/promises';
 import { UniqueKeyService } from '../uniqueKey/uniquekey.service';
 import { UploadService } from '../upload/upload.service';
 import { LinkService } from '../link/link.service';
-import { PostRepository } from './post.repository';
+import { PostRepository } from '../../shared/repositories/post.repository';
 import { SettingService } from '../setting/setting.service';
 
 @Injectable()

@@ -1,10 +1,6 @@
-/*
-https://docs.nestjs.com/providers#services
-*/
-
 import { Inject, Injectable } from '@nestjs/common';
 import { URL } from 'url';
-import { LinkRepository } from './link.repository';
+import { LinkRepository } from '../../shared/repositories/link.repository';
 import { LinkEntity } from 'src/models/link.entity';
 import { ConfigService } from '@nestjs/config';
 

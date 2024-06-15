@@ -1,7 +1,3 @@
-/*
-https://docs.nestjs.com/controllers#controllers
-*/
-
 import { Controller, Get } from '@nestjs/common';
 import { LinkService } from './link.service';
 

@@ -1,4 +1,4 @@
-import { SettingRepository } from './setting.repository';
+import { SettingRepository } from '../../shared/repositories/setting.repository';
 import { SettingService } from './setting.service';
 
 import { Module } from '@nestjs/common';

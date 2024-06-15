@@ -7,6 +7,7 @@ import {
   UseInterceptors,
   HttpStatus,
   Query,
+  Delete,
 } from '@nestjs/common';
 import { Response } from 'express';
 import { UploadService } from './upload.service';
@@ -38,5 +39,12 @@ export class UploadController {
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
         .send('Internal server error');
     }
+  }
+
+  @Delete('/deleteS3')
+  deleteS3() {
+    return this.uploadService.deleteFile(
+      '29bace51-8a57-470e-865e-2e234c065b83.txt',
+    );
   }
 }

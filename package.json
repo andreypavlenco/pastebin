@@ -24,6 +24,7 @@
     "@nestjs/config": "^3.2.2",
     "@nestjs/core": "^10.0.0",
     "@nestjs/platform-express": "^10.0.0",
+    "@nestjs/schedule": "^4.0.2",
     "@nestjs/typeorm": "^10.0.2",
     "aws-sdk": "^2.1630.0",
     "fs": "^0.0.1-security",
