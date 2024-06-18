@@ -18,8 +18,8 @@ export class AwsService {
 
   private S3(): AWS.S3 {
     return new AWS.S3({
-     // accessKeyId: this._S3_ACCESSKEYID,
-    //  secretAccessKey: this._S3_SECRETACCESSKEY,
+     //  accessKeyId: this._S3_ACCESSKEYID,
+     //  secretAccessKey: this._S3_SECRETACCESSKEY,
     });
   }
 
