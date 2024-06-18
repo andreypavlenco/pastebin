@@ -3,12 +3,14 @@ import {
   Column,
   Entity,
   JoinColumn,
+  ManyToOne,
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
 import { PostEntity } from './post.entity';
 import { LinkEntity } from './link.entity';
+import { UserEntity } from './user.entity';
 
 @Entity('setting')
 export class SettingEntity {
@@ -16,14 +18,11 @@ export class SettingEntity {
   setting_id: number;
 
   @Column({ type: 'timestamp' })
-  deleteLink: Date;
+  deleteTimePost: Date;
 
-  @Column({ type: 'timestamp' })
-  deletePost: Date;
-
-  // @ManyToOne(() => User, (user) => user.setting)
-  // @JoinColumn({ name: 'user_id' })
-  // user: User;
+  @ManyToOne(() => UserEntity, (user) => user.setting)
+  @JoinColumn({ name: 'user_id' })
+  user: UserEntity;
 
   @OneToOne(() => LinkEntity, (link) => link.setting)
   @JoinColumn({ name: 'link_id' })
@@ -36,8 +35,7 @@ export class SettingEntity {
   @BeforeInsert()
   updateDates() {
     const currentDate = new Date();
-    currentDate.setSeconds(currentDate.getSeconds() + 2);
-    this.deleteLink = currentDate;
-    this.deletePost = currentDate;
+    currentDate.setHours(currentDate.getHours() + 6);
+    this.deleteTimePost = currentDate;
   }
 }

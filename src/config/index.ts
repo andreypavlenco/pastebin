@@ -9,7 +9,12 @@ export default () => ({
     database: process.env.PG_DATABASE,
   },
   jwt: {
-    jwt_secret: process.env.JWT_SECRET,
-    jwt_expiresIn: process.env.JWT_EXPIRESIN,
+    access_secret: process.env.JWT_ACCESS_SECRET,
+    refresh_secret: process.env.JWT_REFRESH_SECRET,
+  },
+  aws: {
+    s3_bucket: process.env.AWS_S3_BUCKET,
+    s3_accessKeyId: process.env.AWS_S3_ACCESSKEYID,
+    s3_secretAccessKey: process.env.AWS_S3_SECRETACCESSKEY,
   },
 });

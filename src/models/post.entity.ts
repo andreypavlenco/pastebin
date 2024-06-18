@@ -3,11 +3,13 @@ import {
   CreateDateColumn,
   Entity,
   JoinColumn,
+  ManyToOne,
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { SettingEntity } from './setting.entity';
 import { LinkEntity } from './link.entity';
+import { UserEntity } from './user.entity';
 
 @Entity('post')
 export class PostEntity {
@@ -15,22 +17,20 @@ export class PostEntity {
   post_id: number;
 
   @Column({ type: 'varchar' })
-  key_text: string;
+  key_file: string;
 
-  // @OneToMany(() => User, (user) => user.post)
-  // @JoinColumn({ name: 'user_id' })
-  // user: User;
+  @ManyToOne(() => UserEntity, (user) => user.post)
+  @JoinColumn({ name: 'user_id' })
+  user: UserEntity;
 
   @CreateDateColumn()
   createAt: Date;
 
   @OneToOne(() => SettingEntity, (setting) => setting.post)
+  @JoinColumn({ name: 'setting_id' })
   setting: SettingEntity;
 
   @OneToOne(() => LinkEntity, (link) => link.post)
   @JoinColumn({ name: 'link_id' })
   link: LinkEntity;
-
-  // @Column({ type: 'int' })
-  // user_id: number;
 }

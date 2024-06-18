@@ -1,11 +1,12 @@
 import { Module } from '@nestjs/common';
 import { AutoDeleteService } from './auto-delete.service';
-import { SettingRepository } from '../../shared/repositories/setting.repository';
 import { ScheduleModule } from '@nestjs/schedule';
+import { AutoDeleteTransaction } from '../../shared/transaction/auto-delete.transaction';
+import { AwsModule } from '../aws-s3';
+import { SettingRepository } from 'src/shared/repositories';
 
 @Module({
-  imports: [ScheduleModule.forRoot()],
-  controllers: [],
-  providers: [AutoDeleteService, SettingRepository],
+  imports: [ScheduleModule.forRoot(), AwsModule],
+  providers: [AutoDeleteService, SettingRepository, AutoDeleteTransaction],
 })
 export class AutoDeleteModule {}

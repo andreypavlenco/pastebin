@@ -1,3 +1,4 @@
+import { AuthModule } from './modules/auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { Module } from '@nestjs/common';
 import config from 'src/config';
@@ -7,6 +8,7 @@ import { AutoDeleteModule } from './modules/auto-delete/auto-delete.module';
 
 @Module({
   imports: [
+    AuthModule,
     PgModule,
     AutoDeleteModule,
     PostModule,

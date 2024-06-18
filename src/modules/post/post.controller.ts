@@ -1,13 +1,35 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Post,
+  Put,
+  Query,
+  Req,
+  Res,
+  UseGuards,
+} from '@nestjs/common';
 import { PostService } from './post.service';
 import { savePostDto } from './dto';
+import { Request } from 'express';
+import { AccessTokenGuard } from 'src/guards/accessToken.guard';
 
-@Controller()
+@Controller('post')
 export class PostController {
   constructor(private readonly postService: PostService) {}
 
-  @Post('/post')
-  savePost(@Body() dto: savePostDto) {
-    return this.postService.savePost(dto);
+  @UseGuards(AccessTokenGuard)
+  @Post()
+  savePost(@Body() dto: savePostDto, @Req() req: Request) {
+    return this.postService.savePost(dto, req.user['id']);
+  }
+
+  @UseGuards(AccessTokenGuard)
+  @Put('update')
+  updatePost(
+    @Res() res: Response,
+    @Query('key') key: string,
+    @Body() dto: savePostDto,
+  ) {
+    return this.postService.updatePost(dto, key);
   }
 }

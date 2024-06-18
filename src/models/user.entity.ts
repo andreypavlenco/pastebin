@@ -1,29 +1,35 @@
-// import {
-//   Column,
-//   Entity,
-//   JoinColumn,
-//   OneToMany,
-//   PrimaryGeneratedColumn,
-// } from 'typeorm';
-// import { Post } from './post.entity';
-// import { Setting } from './setting.entity';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { PostEntity } from './post.entity';
+import { SettingEntity } from './setting.entity';
 
-// @Entity('user')
-// export class UserEntity {
-//   @PrimaryGeneratedColumn({ type: 'int' })
-//   user_id: number;
+@Entity('user')
+export class UserEntity {
+  @PrimaryGeneratedColumn({ type: 'int' })
+  user_id: number;
 
-//   @Column({ type: 'varchar' })
-//   email: string;
+  @Column({ type: 'varchar' })
+  email: string;
 
-//   @Column({ type: 'varchar' })
-//   password: string;
+  @Column({ type: 'varchar' })
+  username: string;
 
-//   @OneToMany(() => Post, (post) => post.user)
-//   @JoinColumn()
-//   post: Post[];
+  @Column({ type: 'varchar' })
+  password: string;
 
-//   @OneToMany(() => Setting, (setting) => setting.user)
-//   @JoinColumn()
-//   setting: Setting[];
-// }
+  @OneToMany(() => PostEntity, (post) => post.user)
+  @JoinColumn()
+  post: PostEntity[];
+
+  @OneToMany(() => SettingEntity, (setting) => setting.user)
+  @JoinColumn()
+  setting: SettingEntity[];
+
+  @Column({ type: 'varchar' })
+  refreshToken: string;
+}
