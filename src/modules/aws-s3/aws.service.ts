@@ -4,22 +4,22 @@ import * as AWS from 'aws-sdk';
 
 @Injectable()
 export class AwsService {
-  private _S3_BUCKET: string;
-  private _S3_ACCESSKEYID: string;
-  private _S3_SECRETACCESSKEY: string;
+  private S3_BUCKET: string;
+  private S3_ACCESSKEYID: string;
+  private S3_SECRETACCESSKEY: string;
 
   constructor(private configService: ConfigService) {
-    this._S3_BUCKET = this.configService.get<string>('aws.s3_bucket');
-    this._S3_ACCESSKEYID = this.configService.get<string>('aws.s3_accessKeyId');
-    this._S3_SECRETACCESSKEY = this.configService.get<string>(
+    this.S3_BUCKET = this.configService.get<string>('aws.s3_bucket');
+    this.S3_ACCESSKEYID = this.configService.get<string>('aws.s3_accessKeyId');
+    this.S3_SECRETACCESSKEY = this.configService.get<string>(
       'aws.s3_secretAccessKey',
     );
   }
 
   private S3(): AWS.S3 {
     return new AWS.S3({
-     //  accessKeyId: this._S3_ACCESSKEYID,
-     //  secretAccessKey: this._S3_SECRETACCESSKEY,
+      accessKeyId: this.S3_ACCESSKEYID,
+      secretAccessKey: this.S3_SECRETACCESSKEY,
     });
   }
 
@@ -29,7 +29,7 @@ export class AwsService {
   ): Promise<AWS.S3.ManagedUpload.SendData> {
     try {
       const params: AWS.S3.PutObjectRequest = {
-        Bucket: this._S3_BUCKET,
+        Bucket: this.S3_BUCKET,
         Key: originalName,
         Body: file,
         ContentType: 'text/plain',
@@ -44,7 +44,7 @@ export class AwsService {
   async findFileS3(keyFile: string): Promise<Buffer> {
     try {
       const params: AWS.S3.GetObjectAclRequest = {
-        Bucket: this._S3_BUCKET,
+        Bucket: this.S3_BUCKET,
         Key: keyFile,
       };
       const file = await this.S3().getObject(params).promise();
@@ -57,7 +57,7 @@ export class AwsService {
   async deleteFileS3(keyFile: string): Promise<AWS.S3.DeleteObjectOutput> {
     try {
       const params: AWS.S3.DeleteObjectRequest = {
-        Bucket: this._S3_BUCKET,
+        Bucket: this.S3_BUCKET,
         Key: keyFile,
       };
       return await this.S3().deleteObject(params).promise();
@@ -72,7 +72,7 @@ export class AwsService {
     try {
       const keysFiles = keysToDelete.map((key_file) => ({ Key: key_file }));
       const params = {
-        Bucket: this._S3_BUCKET,
+        Bucket: this.S3_BUCKET,
         Delete: {
           Objects: keysFiles,
           Quiet: false,
@@ -90,7 +90,7 @@ export class AwsService {
   ): Promise<AWS.S3.PutObjectOutput> {
     try {
       const params: AWS.S3.PutObjectRequest = {
-        Bucket: this._S3_BUCKET,
+        Bucket: this.S3_BUCKET,
         Key: keyFile,
         Body: newFile,
         ContentType: 'text/plain',

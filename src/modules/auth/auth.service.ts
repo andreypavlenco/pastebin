@@ -10,29 +10,33 @@ export class AuthService {
     @Inject(UserRepository) private userRepository: UserRepository,
     @Inject(TokensGenerate) private tokensGenerate: TokensGenerate,
   ) {}
+
   async signUp(dto: CreateUserDto) {
     const userExists = await this.userRepository.findUserByEmail(dto.email);
-    if (userExists) {
-      throw new BadRequestException('User already exists');
-    }
+    if (userExists) throw new BadRequestException('User already exists');
     const hashPassword = await bcrypt.hash(dto.password, 10);
+
     const newUser = await this.userRepository.saveUser({
       ...dto,
       password: hashPassword,
     });
+
     const tokens = await this.tokensGenerate.getTokens(
       String(newUser.user_id),
       newUser.username,
     );
+
     await this.updateRefreshToken(newUser.user_id, tokens.refreshToken);
     return tokens;
   }
+
   async signIn(dto: AuthDto) {
     const user = await this.userRepository.findUserByEmail(dto.email);
     if (!user) throw new BadRequestException('User does not exist');
     const comparePassword = await bcrypt.compare(dto.password, user.password);
     if (!comparePassword)
       throw new BadRequestException('Password is incorrect');
+
     const tokens = await this.tokensGenerate.getTokens(
       String(user.user_id),
       user.username,
@@ -40,6 +44,7 @@ export class AuthService {
     await this.updateRefreshToken(user.user_id, tokens.refreshToken);
     return tokens;
   }
+
   async updateRefreshToken(userId: number, refreshToken: string) {
     const hashedRefreshToken = await bcrypt.hash(refreshToken, 10);
     try {

@@ -19,7 +19,7 @@ export class SettingService {
   async deleteSettingPost(settingId) {
     try {
       const setting = await this.deleteSettingPost(settingId);
-      if (setting != undefined) return this.deleteSettingTransaction(setting);
+      if (setting !== undefined) return this.deleteSettingTransaction(setting);
     } catch (error) {
       throw new BadRequestException(error.message);
     }

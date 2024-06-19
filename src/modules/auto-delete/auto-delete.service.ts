@@ -1,4 +1,9 @@
-import { Inject, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Inject,
+  Injectable,
+  Logger,
+} from '@nestjs/common';
 import { SettingRepository } from '../../shared/repositories/setting.repository';
 import { Cron, CronExpression } from '@nestjs/schedule';
 import { LinkEntity } from 'src/models/link.entity';
@@ -15,6 +20,7 @@ export interface DeleteSettingPost {
 
 @Injectable()
 export class AutoDeleteService {
+  private logger = new Logger(AutoDeleteService.name);
   constructor(
     @Inject(SettingRepository) private settingRepository: SettingRepository,
     @Inject(AutoDeleteTransaction)
@@ -29,7 +35,6 @@ export class AutoDeleteService {
         await this.settingRepository.autoFindDelete();
 
       if (autoFindSettings && autoFindSettings.length > 0) {
-        console.log(`Found ${autoFindSettings.length} items to delete.`);
         const deleteTransaction =
           await this.autoDeleteTransaction.getDelete(autoFindSettings);
         if (
@@ -42,13 +47,15 @@ export class AutoDeleteService {
           };
           await this.awsService.autoDeleteFilesS3(keysToDeleteAWS.posts);
         }
-        console.log('Deletion completed successfully.');
+
+        this.logger.log(
+          `Found ${autoFindSettings.length} items to delete. Deletion completed successfully.`,
+        );
         return 'AutoDelete';
-      } else {
-        console.log('No items found to delete.');
       }
     } catch (error) {
-      console.error('Error occurred during autoDelete:', error);
+      this.logger.error(`Error occurred during autoDelete: ${error.message}`);
+      throw new BadRequestException('Error occurred during autoDelete', error);
     }
   }
 }

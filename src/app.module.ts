@@ -1,3 +1,6 @@
+import { RedisModule } from './redis/redis.module';
+import { RedisService } from './redis/redis.service';
+import { LoggerService } from './logging/logger.service';
 import { AuthModule } from './modules/auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { Module } from '@nestjs/common';
@@ -8,6 +11,7 @@ import { AutoDeleteModule } from './modules/auto-delete/auto-delete.module';
 
 @Module({
   imports: [
+    RedisModule,
     AuthModule,
     PgModule,
     AutoDeleteModule,
@@ -18,6 +22,6 @@ import { AutoDeleteModule } from './modules/auto-delete/auto-delete.module';
     }),
   ],
   controllers: [],
-  providers: [],
+  providers: [LoggerService],
 })
 export class AppModule {}
