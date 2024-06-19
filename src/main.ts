@@ -2,7 +2,7 @@ import { AppModule } from './app.module';
 import { ConfigService } from '@nestjs/config';
 import { WinstonModule } from 'nest-winston';
 import { NestFactory } from '@nestjs/core';
-import { LoggerService } from './logging/logger.service';
+import { LoggerService } from './logger/logger.service';
 
 async function bootstrap() {
   const loggerService = new LoggerService();
