@@ -22,14 +22,12 @@ export class RedisService {
 
   async getRedis(keyFile) {
     try {
-      // Get a value from Redis based on the provided `keyFile`
       const getResult = await this.redisClient.getClient().get(keyFile);
       this.logger.log(`${getResult}`);
-      return getResult; // Return the retrieved value from Redis
+      return getResult;
     } catch (error) {
-      // Handle any errors that occur during the get operation
       this.logger.error(`Error getting Redis key ${keyFile}: ${error.message}`);
-      throw error; // Optionally re-throw the error or handle it according to your application's needs
+      throw error;
     }
   }
 }

@@ -17,4 +17,8 @@ export default () => ({
     s3_accessKeyId: process.env.AWS_S3_ACCESSKEYID,
     s3_secretAccessKey: process.env.AWS_S3_SECRETACCESSKEY,
   },
+  redis: {
+    host: process.env.REDIS_HOST,
+    port: parseInt(process.env.REDIS_PORT, 10) || 6379,
+  },
 });
