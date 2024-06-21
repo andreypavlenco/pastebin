@@ -8,8 +8,8 @@ export class RedisClient {
   private logger = new Logger(RedisClient.name);
   constructor(private configService: ConfigService) {
     this.client = new Redis({
-      host: 'localhost',
-      port: 6379,
+      host: this.configService.get<string>('redis.host'),
+      port: this.configService.get<number>('redis.post'),
     });
 
     this.client.on('error', (error) => {

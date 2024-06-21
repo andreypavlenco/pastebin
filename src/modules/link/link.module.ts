@@ -6,10 +6,9 @@ import { Module } from '@nestjs/common';
 import { AwsModule } from '../aws-s3';
 import { GenerateLinkUrl } from 'src/helpers';
 import { RedisModule } from 'src/redis/redis.module';
-import { PostModule } from '../post';
 
 @Module({
-  imports: [ConfigModule, AwsModule, RedisModule, PostModule],
+  imports: [ConfigModule, AwsModule, RedisModule],
   controllers: [LinkController],
   providers: [LinkService, LinkRepository, GenerateLinkUrl],
   exports: [LinkService],
