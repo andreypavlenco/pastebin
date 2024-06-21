@@ -19,6 +19,9 @@ export class PostEntity {
   @Column({ type: 'varchar' })
   key_file: string;
 
+  @Column({ type: 'int', default: 0 })
+  popular: number;
+
   @ManyToOne(() => UserEntity, (user) => user.post)
   @JoinColumn({ name: 'user_id' })
   user: UserEntity;

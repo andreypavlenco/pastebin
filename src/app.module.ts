@@ -1,3 +1,4 @@
+import { CacheService } from './redis/cache.service';
 import { RedisModule } from './redis/redis.module';
 import { RedisService } from './redis/redis.service';
 import { LoggerService } from './logger/logger.service';

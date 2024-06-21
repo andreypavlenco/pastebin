@@ -28,11 +28,11 @@ export class LinkService {
   }
 
   async findLinkFile(keyFile: string) {
-    const getRedis = await this.redisService.getRedis(keyFile);
+    const getRedis = await this.redisService.get(keyFile);
     if (getRedis === null) {
       const fileBuffer = await this.awsService.findFileS3(keyFile);
       this.logger.log(`${fileBuffer}`);
-      this.redisService.setRedis(keyFile, fileBuffer);
+      this.redisService.set(keyFile, fileBuffer);
       return fileBuffer;
     }
     return getRedis;
