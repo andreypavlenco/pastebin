@@ -10,7 +10,7 @@ async function bootstrap() {
     logger: WinstonModule.createLogger(loggerService.createLoggerConfig),
   });
   const configService = app.get(ConfigService);
-  const port = configService.get<string>('port') || 3000; // Убедитесь, что порт задан
+  const port = configService.get<string>('app.port') || 3000;
   await app.listen(port);
 }
 
