@@ -1,8 +1,8 @@
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { UserRepository } from 'src/shared/repositories/user.repository';
-import { CreateUserDto } from './dto/CreateUserDto';
+import { createUserDto } from './dto/createUserDto';
 import * as bcrypt from 'bcrypt';
-import { AuthDto } from './dto/AuthDto';
+import { authDto } from './dto/authDto';
 import { TokensGenerate } from 'src/helpers';
 @Injectable()
 export class AuthService {
@@ -11,7 +11,7 @@ export class AuthService {
     @Inject(TokensGenerate) private tokensGenerate: TokensGenerate,
   ) {}
 
-  async signUp(dto: CreateUserDto) {
+  async signUp(dto: createUserDto) {
     const userExists = await this.userRepository.findUserByEmail(dto.email);
     if (userExists) throw new BadRequestException('User already exists');
     const hashPassword = await bcrypt.hash(dto.password, 10);
@@ -30,7 +30,7 @@ export class AuthService {
     return tokens;
   }
 
-  async signIn(dto: AuthDto) {
+  async signIn(dto: authDto) {
     const user = await this.userRepository.findUserByEmail(dto.email);
     if (!user) throw new BadRequestException('User does not exist');
     const comparePassword = await bcrypt.compare(dto.password, user.password);

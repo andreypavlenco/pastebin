@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { UserEntity } from 'src/models/user.entity';
-import { CreateUserDto } from 'src/modules/auth/dto/CreateUserDto';
+import { createUserDto } from 'src/modules/auth/dto/createUserDto';
 import { DataSource, Repository } from 'typeorm';
 
 @Injectable()
@@ -12,7 +12,7 @@ export class UserRepository {
     this.userRepository = this.dataSource.getRepository(UserEntity);
   }
 
-  async saveUser(dto: CreateUserDto): Promise<UserEntity> {
+  async saveUser(dto: createUserDto): Promise<UserEntity> {
     try {
       return await this.userRepository.save({ ...dto, refreshToken: '' });
     } catch (error) {
