@@ -3,13 +3,22 @@ import { ConfigService } from '@nestjs/config';
 import { WinstonModule } from 'nest-winston';
 import { NestFactory } from '@nestjs/core';
 import { LoggerService } from './logger/logger.service';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const loggerService = new LoggerService();
   const app = await NestFactory.create(AppModule, {
     logger: WinstonModule.createLogger(loggerService.createLoggerConfig),
   });
+  const config = new DocumentBuilder()
+    .setTitle('Pastebin')
+    .setDescription('The pastebin Api description')
+    .setVersion('1.0')
+    .addTag('pastebin')
+    .build();
+  const document = SwaggerModule.createDocument(app, config);
   const configService = app.get(ConfigService);
+  SwaggerModule.setup('api', app, document);
   const port = configService.get<string>('app.port') || 3000;
   await app.listen(port);
 }
