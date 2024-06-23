@@ -4,8 +4,8 @@ import { RedisService } from './redis.service';
 import { RedisClient } from './redis.client';
 import { CacheService } from './cache.service';
 
+
 @Module({
-  imports: [],
   controllers: [],
   providers: [RedisService, RedisClient, ConfigService, CacheService],
   exports: [RedisService],
