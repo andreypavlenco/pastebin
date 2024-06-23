@@ -9,7 +9,7 @@ export class RedisClient {
   constructor(private configService: ConfigService) {
     this.client = new Redis({
       host: this.configService.get<string>('redis.host'),
-      port: this.configService.get<number>('redis.post'),
+      port: this.configService.get<number>('redis.port'),
     });
 
     this.client.on('error', (error) => {

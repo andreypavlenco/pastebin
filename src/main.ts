@@ -4,6 +4,7 @@ import { WinstonModule } from 'nest-winston';
 import { NestFactory } from '@nestjs/core';
 import { LoggerService } from './logger/logger.service';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { ClusterService } from './cluster/cluster.service';
 
 async function bootstrap() {
   const loggerService = new LoggerService();
@@ -23,4 +24,4 @@ async function bootstrap() {
   await app.listen(port);
 }
 
-bootstrap();
+ClusterService.clusterize(bootstrap)
